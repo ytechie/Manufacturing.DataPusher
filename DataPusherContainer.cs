@@ -1,5 +1,7 @@
 ﻿using Bootstrap.StructureMap;
 using StructureMap;
+using StructureMap.Graph;
+using StructureMap.Pipeline;
 
 namespace Manufacturing.DataPusher
 {
@@ -10,7 +12,7 @@ namespace Manufacturing.DataPusher
             container.Configure(x => x.Scan(y =>
             {
                 y.TheCallingAssembly();
-                y.SingleImplementationsOfInterface().OnAddedPluginTypes(z => z.LifecycleIs(InstanceScope.Unique));
+                y.SingleImplementationsOfInterface().OnAddedPluginTypes(z => z.LifecycleIs(new TransientLifecycle()));
             }));
         }
     }
