@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using Manufacturing.Framework.Datasource;
 using Manufacturing.Framework.Dto;
 
-namespace Manufacturing.Framework.DataPusher
+namespace Manufacturing.DataPusher
 {
     public interface IDataPusher
     {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Bootstrap.Extensions.StartupTasks;
 using Manufacturing.DataCollector;
-using Manufacturing.Framework.DataPusher;
 using Manufacturing.Framework.Datasource;
 using Manufacturing.Framework.Dto;
 using Manufacturing.Framework.Utility;
