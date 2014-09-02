@@ -1,6 +1,10 @@
 Manufacturing.DataPusher
 =======================
 
+A framework for pushing data to Azure. The source location could be a local Windows message queue, a local service bus queue, SQL Server, a file system, or any other source using the adapter pattern. The included and default adapters read from a local MS Message Queue and push to a service bus queue.
+
+Sources implement `ILocalRecordRepository`, and the destinations implement `IDataPusher`. Modify the `DataPusherContainer` to change the implementations that get used. By default, [auto-registration](http://structuremap.github.io/registration/auto-registration-and-conventions/) is used.
+
 # License
 
 Microsoft Developer Experience & Evangelism
