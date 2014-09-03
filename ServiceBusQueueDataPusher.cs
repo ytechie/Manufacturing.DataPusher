@@ -53,7 +53,7 @@ namespace Manufacturing.DataPusher
                 sender.Send(msg);
                 sw.Stop();
 
-                Log.DebugFormat("Pushed {0} records in {1}ms", recList.Count, sw.ElapsedMilliseconds);
+                Log.DebugFormat("Pushed {0} records to topic/queue in {1}ms", recList.Count, sw.ElapsedMilliseconds);
             }
         }
     }

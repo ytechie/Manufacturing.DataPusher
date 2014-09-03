@@ -2,10 +2,13 @@
 	"PushIntervalSeconds": 1,
 	"PushBatchSize": 5000,
 
-	"ReceiverQueue": {
-		"Namespace": "manufacturing",
-		"SharedAccessKeyName": "ClientPush",
-		"SharedAccessKey": "",
-		"QueueName": "receiver"
-	},
+    "ReceiverQueue": {
+        "Namespace": "manufacturing",
+        "SharedAccessKeyName": "ClientPush",
+        "SharedAccessKey": "",
+        "QueueName": "receiver"
+    },
+
+    "EventHubConnectionString": "",
+    "EventHubPath": "receiver"
 }

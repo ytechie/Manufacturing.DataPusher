@@ -44,20 +44,18 @@ namespace Manufacturing.DataPusher
 
         private void PushNow()
         {
-            while (true)
+            DateTime nextPushTime;
+            DateTime now;
+
+            do
             {
                 _lastPush = _dateTime.UtcNow;
-
                 _repo.ProcessRecords(ProcessRecords, _config.PushBatchSize);
+                nextPushTime = _lastPush.AddSeconds(_config.PushIntervalSeconds);
+                now = _dateTime.UtcNow;
+            } while (nextPushTime <= now);
 
-                var nextPushTime = _lastPush.AddSeconds(_config.PushIntervalSeconds);
-                var now = _dateTime.UtcNow;
-                if (nextPushTime <= now)
-                    continue;
-                
-                _timer.Change(nextPushTime.Subtract(now), TimeSpan.Zero);
-                break;
-            }
+            _timer.Change(nextPushTime.Subtract(now), TimeSpan.Zero);
         }
 
         private void ProcessRecords(IEnumerable<DatasourceRecord> records)
