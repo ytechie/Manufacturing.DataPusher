@@ -1,7 +1,5 @@
-﻿using System;
-using Bootstrap.StructureMap;
+﻿using Bootstrap.StructureMap;
 using Manufacturing.DataCollector.Datasources.Simulation;
-using Manufacturing.Framework.DataPusher;
 using StructureMap;
 using StructureMap.Configuration.DSL;
 using StructureMap.Graph;

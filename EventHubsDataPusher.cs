@@ -5,7 +5,6 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using log4net;
-using Manufacturing.Framework.DataPusher;
 using Manufacturing.Framework.Datasource;
 using Manufacturing.Framework.Dto;
 using Microsoft.ServiceBus;
