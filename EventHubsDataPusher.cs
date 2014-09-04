@@ -25,15 +25,7 @@ namespace Manufacturing.DataPusher
         {
             _recordSerializer = recordSerializer;
 
-            var factory = MessagingFactory.Create("sb://jymfx-ns.servicebus.windows.net/", new MessagingFactorySettings()
-            {
-                TokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider("send", "ZfOSLx83PtF2mwgh1DO285XQupK67bNEPg41QgHC7GQ="),
-                TransportType = TransportType.Amqp,
-                AmqpTransportSettings = new AmqpTransportSettings { BatchFlushInterval = TimeSpan.FromSeconds(5) }
-            });
-            _eventHub = factory.CreateEventHubClient(configuration.EventHubPath);
-            //_eventHub = EventHubClient.CreateFromConnectionString(configuration.EventHubConnectionString, configuration.EventHubPath);
-
+            _eventHub = EventHubClient.CreateFromConnectionString(configuration.EventHubConnectionString, configuration.EventHubPath);
         }
 
         public void PushRecords(IEnumerable<DatasourceRecord> records)
