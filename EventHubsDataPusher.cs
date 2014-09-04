@@ -9,6 +9,7 @@ using Manufacturing.Framework.Datasource;
 using Manufacturing.Framework.Dto;
 using Microsoft.ServiceBus;
 using Microsoft.ServiceBus.Messaging;
+using Microsoft.ServiceBus.Messaging.Amqp;
 
 namespace Manufacturing.DataPusher
 {
@@ -28,15 +29,20 @@ namespace Manufacturing.DataPusher
             _processorCount = Environment.ProcessorCount;
             _eventHubClients = new List<EventHubClient>(_processorCount);
 
-            var connectionStringBuilder =
-                new ServiceBusConnectionStringBuilder(configuration.EventHubConnectionString)
+            var factory = MessagingFactory.Create(
+                "sb://" + configuration.EventHubNamespace + ".servicebus.windows.net/",
+                new MessagingFactorySettings
                 {
+                    TokenProvider =
+                        TokenProvider.CreateSharedAccessSignatureTokenProvider(configuration.EventHubSharedAccessKeyName,
+                            configuration.EventHubSharedAccessKey),
                     TransportType = TransportType.Amqp,
-                };
+                    AmqpTransportSettings = new AmqpTransportSettings()
+                });
 
             for (var i = 0; i < _processorCount; i++)
             {
-                var newConnnection = EventHubClient.CreateFromConnectionString(connectionStringBuilder.ToString(), configuration.EventHubPath);
+                var newConnnection = factory.CreateEventHubClient(configuration.EventHubPath);
          
                 _eventHubClients.Add(newConnnection);
             }

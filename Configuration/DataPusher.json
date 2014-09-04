@@ -9,6 +9,8 @@
         "QueueName": "receiver"
     },
 
-    "EventHubConnectionString": "",
+    "EventHubNamespace": "",
+    "EventHubSharedAccessKeyName": "",
+    "EventHubSharedAccessKey": "",
     "EventHubPath": "receiver"
 }
