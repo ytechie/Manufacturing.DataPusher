@@ -121,6 +121,7 @@
     <Compile Include="DataPusherConfiguration.cs" />
     <Compile Include="DataPusherContainer.cs" />
     <Compile Include="EventHubsDataPusher.cs" />
+    <Compile Include="IDataPusher.cs" />
     <Compile Include="Pusher.cs" />
     <Compile Include="Service1.cs">
       <SubType>Component</SubType>
