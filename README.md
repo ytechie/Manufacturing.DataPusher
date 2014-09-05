@@ -5,6 +5,14 @@ A framework for pushing data to Azure. The source location could be a local Wind
 
 Sources implement `ILocalRecordRepository`, and the destinations implement `IDataPusher`. Modify the `DataPusherContainer` to change the implementations that get used. By default, [auto-registration](http://structuremap.github.io/registration/auto-registration-and-conventions/) is used.
 
+By default, data is pulled from a local MSMQ, which can be clustered for high availability. The default transport is [Azure Event Hubs](http://azure.microsoft.com/en-us/services/event-hubs/) due to the extremely high ingestion rate.
+
+## Prerequisites
+
+* Since data is pulled from a local MSMQ by default, you'll need to have this Windows feature installed. Fortunately, it's available in all editions of Windows. Turn it on in *Add/Remove Programs* under *Windows Features*.
+
+![Turn on MSMQ Windows Feature](Documentation/msmq-windows-feature.gif)
+
 # License
 
 Microsoft Developer Experience & Evangelism
