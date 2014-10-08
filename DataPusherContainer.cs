@@ -1,4 +1,5 @@
 ﻿using Bootstrap.StructureMap;
+using Manufacturing.DataCollector;
 using Manufacturing.DataCollector.Datasources.Simulation;
 using StructureMap;
 using StructureMap.Configuration.DSL;
@@ -19,6 +20,8 @@ namespace Manufacturing.DataPusher
                 x.AddRegistry(new DataPusherRegistry());
 
                 x.For<RandomDatasource>().LifecycleIs<SingletonLifecycle>();
+
+                x.For<ILocalRecordRepository>().Use<MemoryRecordRepository>();
             }));
             
         }
