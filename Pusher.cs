@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using Bootstrap.Extensions.StartupTasks;
 using Manufacturing.DataCollector;
-using Manufacturing.Framework.Datasource;
 using Manufacturing.Framework.Dto;
 using Manufacturing.Framework.Utility;
 
@@ -54,7 +54,7 @@ namespace Manufacturing.DataPusher
                 now = _dateTime.UtcNow;
             } while (nextPushTime <= now);
 
-            _timer.Change(nextPushTime.Subtract(now), TimeSpan.Zero);
+            _timer.Change(nextPushTime.Subtract(now), Timeout.InfiniteTimeSpan);
         }
 
         private void ProcessRecords(IEnumerable<DatasourceRecord> records)
