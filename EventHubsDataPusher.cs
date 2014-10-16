@@ -50,34 +50,40 @@ namespace Manufacturing.DataPusher
             Log.DebugFormat("Initialized {0} Event Hub clients", _processorCount);
         }
 
-        public void PushRecords(IEnumerable<DatasourceRecord> records)
+        public async void PushRecords(IEnumerable<DatasourceRecord> records)
         {
-            var tasks = new List<Task>();
             long bytes = 0;
 
             var recs = records.ToArray();
-
-            var sw = new Stopwatch();
-            sw.Start();
-            for(var i = 0; i < recs.Length; i++)
+            var messages = new List<EventData>();
+            
+            foreach (var t in recs)
             {
-                var serialized = _recordSerializer.Serialize(new[] {recs[i]});
+                var serialized = _recordSerializer.Serialize(new[] {t});
                 bytes += serialized.Length;
                 var ed = new EventData(serialized);
 
                 //Later, if we want to batch, we could use "DatasourceRecordBatch"
                 ed.Properties.Add("Type", "DatasourceRecord");
+                ed.Properties.Add("Serializer", _recordSerializer.GetType().Name);
 
-                var client = _eventHubClients[i%_processorCount];
-
-                tasks.Add(client.SendAsync(ed));
+                messages.Add(ed);
             }
-            Task.WaitAll(tasks.ToArray());
+
+            if (messages.Count <= 0) return;
+
+            var sw = new Stopwatch();
+            sw.Start();
+
+            //Should I implement a batch size back off?
+            var client = _eventHubClients[0];
+            await client.SendBatchAsync(messages);
+
             sw.Stop();
 
             var msgsPerSec = (1000.0/sw.ElapsedMilliseconds)*recs.Length;
             Log.DebugFormat("Pushed {0} records to Event Hubs in {1}ms ({2:0} msgs / sec, {3:0} total KB)",
-                recs.Length, sw.ElapsedMilliseconds, msgsPerSec, bytes / 1024.0);
+                recs.Length, sw.ElapsedMilliseconds, msgsPerSec, bytes/1024.0);
         }
     }
 }
